@@ -134,6 +134,7 @@
     <string name="various_install_app_info_version_code">版本代码</string>
     <string name="various_install_app_info_sdk">支持 SDK</string>
     <string name="various_install_app_size">应用大小</string>
+    <string name="package_installer_authorize_offline">未联网检测 · 单次安装授权</string>
     <string name="app_details_playstore">使用应用商店打开</string>
     <string name="app_details_launch">启动</string>
     <string name="app_details_nolaunch">应用没有默认可启动的活动</string>

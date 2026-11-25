@@ -33,6 +33,7 @@ import com.sevtinge.hyperceiler.libhook.rules.packageinstaller.DisableSafeModelT
 import com.sevtinge.hyperceiler.libhook.rules.packageinstaller.DisplayMoreApkInfoNew;
 import com.sevtinge.hyperceiler.libhook.rules.packageinstaller.InstallRiskDisable;
 import com.sevtinge.hyperceiler.libhook.rules.packageinstaller.InstallSource;
+import com.sevtinge.hyperceiler.libhook.rules.packageinstaller.OfflineInstallAuthorization;
 
 @HookBase(targetPackage = "com.miui.packageinstaller")
 public class PackageInstaller extends BaseLoad {
@@ -49,8 +50,11 @@ public class PackageInstaller extends BaseLoad {
         // 禁用风险检测
         initHook(InstallRiskDisable.INSTANCE, PrefsBridge.getBoolean("miui_package_installer_install_risk"));
 
-        // 阻断云端配置下发
-        initHook(DisableCloudCheck.INSTANCE, PrefsBridge.getBoolean("miui_package_installer_disable_cloud_check"));
+        boolean blockCloud = PrefsBridge.getBoolean("miui_package_installer_disable_cloud_check");
+        boolean blockUpload = PrefsBridge.getBoolean("miui_package_installer_upload_appinfo");
+        // 双开时由上传规则拦截请求，保留安装器的离线判定和授权流程。
+        initHook(DisableCloudCheck.INSTANCE, blockCloud && !blockUpload);
+        initHook(OfflineInstallAuthorization.INSTANCE, blockCloud && blockUpload);
 
         // 禁用安全守护提示
         initHook(DisableSafeModelTip.INSTANCE, PrefsBridge.getBoolean("miui_package_installer_safe_model_tip"));
@@ -70,7 +74,7 @@ public class PackageInstaller extends BaseLoad {
         initHook(DisableCountChecking.INSTANCE, PrefsBridge.getBoolean("miui_package_installer_count_checking"));
 
         // 禁用安装前后上传应用信息, 开启后会无法扫描病毒
-        initHook(DisableAppInfoUpload.INSTANCE, PrefsBridge.getBoolean("miui_package_installer_upload_appinfo"));
+        initHook(DisableAppInfoUpload.INSTANCE, blockUpload);
 
     }
 }

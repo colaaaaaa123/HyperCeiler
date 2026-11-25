@@ -140,6 +140,7 @@
     <string name="various_install_app_info_version_code">Version code</string>
     <string name="various_install_app_info_sdk">Support SDK</string>
     <string name="various_install_app_size">Size</string>
+    <string name="package_installer_authorize_offline">Not checked online · Authorize once</string>
     <string name="app_details_playstore">Open with Play Store</string>
     <string name="app_details_launch">Launch</string>
     <string name="app_details_nolaunch">App has no default launchable activity</string>
